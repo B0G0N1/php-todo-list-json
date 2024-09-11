@@ -1,6 +1,6 @@
-<!------------------------
+<!-------------------------
     CONSEGNA ESERCIZIO
-------------------------->
+-------------------------->
 
 Ciao a tutti!
 Esercizio di oggi: PHP ToDo List JSON
