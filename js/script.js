@@ -10,17 +10,33 @@ createApp({
     },
     methods: {
         addTask() {
-            // Placeholder per la funzione di aggiunta
+            if (this.newTask.trim() === '') {
+                this.errorMessage = 'Task cannot be empty!';
+                return;
+            }
+
+            this.errorMessage = '';
+            let task = {
+                id: this.todolist.length + 1,
+                done: false,
+                name: this.newTask
+            };
+
+            axios.post('server.php', { addTask: task })
+                .then(response => {
+                    this.todolist = response.data;
+                    this.newTask = '';  // Reset input
+                })
+                .catch(error => console.log(error));
         },
         toggleTask(id) {
-            // Placeholder per la funzione di toggle
+            // Placeholder per il toggle
         },
         deleteTask(id) {
-            // Placeholder per la funzione di cancellazione
+            // Placeholder per la cancellazione
         }
     },
     mounted() {
-        // Ottenere la lista delle task dal server
         axios.get('server.php')
             .then(response => {
                 this.todolist = response.data;
