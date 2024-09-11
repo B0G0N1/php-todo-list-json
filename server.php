@@ -28,7 +28,18 @@ if (isset($_POST['deleteTask'])) {
             break;
         }
     }
-    $todolist = array_values($todolist); // Riorganizza l'array
+    $todolist = array_values($todolist);
+    saveTodoList($todolist);
+}
+
+// Toggle dello stato di una task (completato/non completato)
+if (isset($_POST['toggleTask'])) {
+    foreach ($todolist as &$task) {
+        if ($task['id'] == $_POST['toggleTask']) {
+            $task['done'] = !$task['done'];
+            break;
+        }
+    }
     saveTodoList($todolist);
 }
 

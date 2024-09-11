@@ -31,12 +31,21 @@ createApp({
             })
             .catch(error => console.log(error));
         },
+        toggleTask(id) {
+            axios.post('server.php', new URLSearchParams({
+                toggleTask: id
+            }))
+            .then(response => {
+                this.todolist = response.data;  // Aggiorna la lista dopo il toggle
+            })
+            .catch(error => console.log(error));
+        },
         deleteTask(id) {
             axios.post('server.php', new URLSearchParams({
                 deleteTask: id
             }))
             .then(response => {
-                this.todolist = response.data;  // Aggiorna la lista dopo l'eliminazione
+                this.todolist = response.data;
             })
             .catch(error => console.log(error));
         }
