@@ -10,33 +10,40 @@ createApp({
     },
     methods: {
         addTask() {
+            // Verifica che il campo di input non sia vuoto
             if (this.newTask.trim() === '') {
                 this.errorMessage = 'Task cannot be empty!';
                 return;
             }
 
             this.errorMessage = '';
+
+            // Definisci l'oggetto task da inviare al server
             let task = {
                 id: this.todolist.length + 1,
                 done: false,
                 name: this.newTask
             };
 
-            axios.post('server.php', { addTask: task })
-                .then(response => {
-                    this.todolist = response.data;
-                    this.newTask = '';  // Reset input
-                })
-                .catch(error => console.log(error));
+            // Invia la nuova task tramite POST al server
+            axios.post('server.php', new URLSearchParams({
+                addTask: JSON.stringify(task)
+            }))
+            .then(response => {
+                this.todolist = response.data;
+                this.newTask = '';  // Resetta il campo di input dopo l'aggiunta
+            })
+            .catch(error => console.log(error));
         },
         toggleTask(id) {
-            // Placeholder per il toggle
+            // Funzione per il toggle dello stato delle task
         },
         deleteTask(id) {
-            // Placeholder per la cancellazione
+            // Funzione per eliminare le task
         }
     },
     mounted() {
+        // Ottieni la lista delle task dal server al caricamento della pagina
         axios.get('server.php')
             .then(response => {
                 this.todolist = response.data;
