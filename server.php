@@ -13,15 +13,22 @@ function saveTodoList($todolist) {
 
 $todolist = getTodoList();
 
-// Verifica se viene inviata una nuova task tramite POST
+// Aggiunta di una nuova task
 if (isset($_POST['addTask'])) {
-    // Decodifica il body JSON per ottenere l'oggetto
     $newTask = json_decode($_POST['addTask'], true);
-    
-    // Aggiungi la nuova task alla lista
     array_push($todolist, $newTask);
-    
-    // Salva la lista aggiornata nel file JSON
+    saveTodoList($todolist);
+}
+
+// Eliminazione di una task
+if (isset($_POST['deleteTask'])) {
+    foreach ($todolist as $key => $task) {
+        if ($task['id'] == $_POST['deleteTask']) {
+            unset($todolist[$key]);
+            break;
+        }
+    }
+    $todolist = array_values($todolist); // Riorganizza l'array
     saveTodoList($todolist);
 }
 
